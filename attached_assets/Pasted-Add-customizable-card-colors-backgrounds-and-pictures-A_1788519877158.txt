@@ -1,0 +1,40 @@
+Add customizable card colors, backgrounds, and pictures.
+
+Allow the user to customize the appearance of each flashcard individually.
+
+Requirements:
+
+* Add a Customize Card option to each flashcard.
+* Allow changing the background color of the card.
+* Provide a simple color picker plus several preset colors.
+* Allow changing the text color.
+* Add the ability to upload a picture to the card.
+* The uploaded picture should be usable in two different ways:
+    * Card image: display the picture as part of the flashcard content.
+    * Background image: display the picture behind the card text.
+* Let the user choose which mode to use.
+
+For a normal Card Image:
+
+* Allow the image to appear above, below, or beside the card text.
+* Keep the image proportional and do not stretch it.
+* Allow resizing the image.
+* Allow removing or replacing the image.
+
+For a Background Image:
+
+* Allow adjusting image opacity.
+* Allow adjusting image position.
+* Add Cover / Contain / Stretch options.
+* Automatically preserve text readability with an optional semi-transparent overlay.
+* Allow removing or replacing the background image.
+* Allow each flashcard to have its own unique image, background color, and style.
+* Add Apply to All Cards only as an optional action. Do not automatically apply changes to other cards.
+* Add Reset Card Style to return the selected card to the default appearance.
+* Save all card appearance and image settings so they remain after refreshing or reopening the app.
+* Preserve card images when exporting to PDF and when printing.
+* Preserve background images/colors in PDF export and print layouts when technically possible.
+* Do not modify or delete the flashcard’s existing text or study content when changing its appearance.
+* Do not redesign unrelated parts of the application.
+
+Test the complete feature by creating multiple flashcards, giving each a different color and picture, refreshing the application, exporting them to PDF, and opening Print Preview to confirm the images and styles remain correct.

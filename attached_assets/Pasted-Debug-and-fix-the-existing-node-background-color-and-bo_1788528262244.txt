@@ -1,0 +1,54 @@
+Debug and fix the existing node background color and border color system. Do not add new color controls.
+
+The Background Color and Border Color controls already exist, but changing them does not visually update the node.
+
+I need you to inspect the current implementation and fix the data flow from the color picker to the rendered node.
+
+Requirements:
+
+* Keep the existing color picker UI.
+* When I change Background Color, the selected node’s visible background must update immediately.
+* When I change Border Color, the selected node’s visible border must update immediately.
+* The values must be stored on the individual node itself, not only in temporary component state.
+* Make sure the rendered custom node component actually reads those saved values.
+* If React Flow is being used, update the selected node through the main React Flow nodes state using the node ID.
+* Preserve all other node data when updating colors.
+* Do not recreate the node or assign a new node ID when changing style.
+* Do not apply the color globally to all nodes.
+* Do not hard-code CSS background or border styles that override the selected values.
+
+Check specifically for CSS conflicts.
+
+Inspect whether classes such as bg-*, border-*, inline styles, Tailwind classes, or default React Flow styles are overriding the user-selected colors.
+
+The final rendered node should use the saved node values as the source of truth, for example conceptually:
+
+backgroundColor = node.data.backgroundColor
+
+borderColor = node.data.borderColor
+
+and the border style must actually exist, for example:
+
+border: 2px solid selectedBorderColor
+
+If the current node component uses inline styles and CSS classes together, make sure the classes do not override the custom colors.
+
+Persistence requirement:
+
+Save backgroundColor and borderColor with each node in the map data so they persist after refresh and reopening the map.
+
+Test before finishing:
+
+1. Create three nodes.
+2. Set different background colors on all three.
+3. Set different border colors on all three.
+4. Confirm the changes appear immediately.
+5. Move the nodes.
+6. Select other nodes.
+7. Refresh the browser.
+8. Reopen the map.
+9. Confirm every node still has its correct background and border color.
+
+If the test fails, continue debugging until it works.
+
+Do not redesign the node panel or change unrelated features.

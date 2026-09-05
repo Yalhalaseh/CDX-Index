@@ -1,0 +1,51 @@
+Bug fix: node background image should replace the node background color visually.
+
+The existing node background image feature is not working correctly. When a background image is added to a node, I want the image to become the visible background of that node instead of the solid background color covering it.
+
+Requirements:
+
+* Keep the existing background image upload feature.
+* When a node has a background image, render that image as the node’s background.
+* The solid background color should no longer visually cover the image.
+* Do not delete the saved background color value; keep it as a fallback for when no image is present.
+* If the background image is removed, automatically show the saved background color again.
+* Make sure the image fills the node according to the selected fit mode: Cover / Contain / Stretch.
+* Preserve the node’s rounded corners and clip the image inside the node boundaries.
+* Keep the border visible above the background image.
+* Keep node text and controls visible above the image.
+* If there is an overlay for readability, it must be semi-transparent and must not completely hide the image.
+* Preserve image opacity and position settings.
+* Save the background image configuration with the node so it persists after refresh and reopening the map.
+
+Debug the existing implementation instead of adding a second background-image system.
+
+Inspect the actual rendered node component and check whether a CSS background-color, Tailwind bg-* class, inner wrapper, or another element is sitting on top of the background image.
+
+The intended rendering priority should be:
+
+1. node background image
+2. optional semi-transparent readability overlay
+3. node text/content
+4. node border
+
+The background color should only be used when the node does not have a background image.
+
+Conceptually, the node should behave like:
+
+if backgroundImage exists -> show backgroundImage
+
+else -> show backgroundColor
+
+Do not render an opaque background-color layer over the image.
+
+Test before finishing:
+
+1. Create a node with a blue background color.
+2. Add a background image.
+3. Confirm the image replaces the visible blue background.
+4. Confirm the border and text remain visible.
+5. Refresh the page and confirm the image remains.
+6. Remove the background image.
+7. Confirm the original blue background color returns.
+
+Do not redesign unrelated parts of the application.
