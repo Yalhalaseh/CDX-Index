@@ -1,9 +1,11 @@
+import cors from "cors";
 import express, { type ErrorRequestHandler, type Express } from "express";
 import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./lib/logger";
 
 const app: Express = express();
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.set("trust proxy", 1);
 
 app.use(
