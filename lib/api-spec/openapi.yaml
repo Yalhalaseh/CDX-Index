@@ -1,0 +1,379 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.2.0
+  description: Knowledge Maps API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: ai
+    description: Structured knowledge-map AI operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /ai/operations:
+    post:
+      operationId: runAiOperation
+      tags: [ai]
+      summary: Run a structured knowledge-map AI operation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AiOperationInput"
+      responses:
+        "200":
+          description: Structured AI result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiOperationResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "413":
+          description: Request body too large
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "429":
+          description: Usage limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "502":
+          description: AI provider error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+        "503":
+          description: AI unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiErrorResponse"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      additionalProperties: false
+      required: [status]
+      properties:
+        status:
+          type: string
+    AiOperation:
+      type: string
+      enum:
+        - summarize
+        - explain
+        - expandNode
+        - generateMap
+        - generateFlashcards
+        - generateQuiz
+        - compareNodes
+        - detectKnowledgeGaps
+        - rewrite
+    AiNodeInput:
+      type: object
+      additionalProperties: false
+      required: [id, text]
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 100
+        text:
+          type: string
+          minLength: 1
+          maxLength: 500
+        notes:
+          type: string
+          maxLength: 10000
+        tags:
+          type: array
+          maxItems: 30
+          items:
+            type: string
+            minLength: 1
+            maxLength: 80
+    AiEdgeInput:
+      type: object
+      additionalProperties: false
+      required: [from, to]
+      properties:
+        from:
+          type: string
+          minLength: 1
+          maxLength: 100
+        to:
+          type: string
+          minLength: 1
+          maxLength: 100
+    AiOperationOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        itemCount:
+          type: number
+          multipleOf: 1
+          minimum: 1
+          maximum: 40
+        difficulty:
+          type: string
+          enum: [easy, medium, hard]
+        language:
+          type: string
+          minLength: 2
+          maxLength: 40
+    AiOperationInput:
+      type: object
+      additionalProperties: false
+      required: [operation, mapTitle, nodes, edges]
+      properties:
+        operation:
+          $ref: "#/components/schemas/AiOperation"
+        mapTitle:
+          type: string
+          minLength: 1
+          maxLength: 200
+        selectedNodeIds:
+          type: array
+          maxItems: 4
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+            maxLength: 100
+        instructions:
+          type: string
+          maxLength: 2000
+        sourceText:
+          type: string
+          maxLength: 100000
+        nodes:
+          type: array
+          maxItems: 150
+          items:
+            $ref: "#/components/schemas/AiNodeInput"
+        edges:
+          type: array
+          maxItems: 300
+          items:
+            $ref: "#/components/schemas/AiEdgeInput"
+        options:
+          $ref: "#/components/schemas/AiOperationOptions"
+    AiGeneratedNode:
+      type: object
+      additionalProperties: false
+      required: [title]
+      properties:
+        tempId:
+          type: string
+          maxLength: 100
+        title:
+          type: string
+          minLength: 1
+          maxLength: 500
+        description:
+          type: string
+          maxLength: 3000
+        relationship:
+          type: string
+          maxLength: 300
+        parentTempId:
+          type: string
+          maxLength: 100
+        tags:
+          type: array
+          maxItems: 20
+          items:
+            type: string
+            maxLength: 80
+    AiGeneratedFlashcard:
+      type: object
+      additionalProperties: false
+      required: [question, answer, tags, difficulty]
+      properties:
+        question:
+          type: string
+          minLength: 1
+          maxLength: 1000
+        answer:
+          type: string
+          minLength: 1
+          maxLength: 3000
+        explanation:
+          type: string
+          maxLength: 3000
+        tags:
+          type: array
+          maxItems: 20
+          items:
+            type: string
+            maxLength: 80
+        difficulty:
+          type: string
+          enum: [easy, medium, hard]
+    AiQuizQuestion:
+      type: object
+      additionalProperties: false
+      required: [question, choices, correctAnswer, explanation]
+      properties:
+        question:
+          type: string
+          minLength: 1
+          maxLength: 1000
+        choices:
+          type: array
+          minItems: 2
+          maxItems: 6
+          items:
+            type: string
+            maxLength: 1000
+        correctAnswer:
+          type: string
+          maxLength: 1000
+        explanation:
+          type: string
+          maxLength: 3000
+    AiComparisonRow:
+      type: object
+      additionalProperties: false
+      required: [category, values]
+      properties:
+        category:
+          type: string
+          minLength: 1
+          maxLength: 300
+        values:
+          type: object
+          additionalProperties:
+            type: string
+            maxLength: 3000
+    AiKnowledgeGap:
+      type: object
+      additionalProperties: false
+      required: [topic, reason, priority, suggestedNextStep]
+      properties:
+        topic:
+          type: string
+          maxLength: 500
+        reason:
+          type: string
+          maxLength: 2000
+        priority:
+          type: string
+          enum: [low, medium, high]
+        suggestedNextStep:
+          type: string
+          maxLength: 2000
+    AiOperationResult:
+      type: object
+      additionalProperties: false
+      properties:
+        text:
+          type: string
+          maxLength: 20000
+        keyPoints:
+          type: array
+          maxItems: 30
+          items:
+            type: string
+            maxLength: 1000
+        nodes:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/AiGeneratedNode"
+        title:
+          type: string
+          maxLength: 500
+        flashcards:
+          type: array
+          maxItems: 20
+          items:
+            $ref: "#/components/schemas/AiGeneratedFlashcard"
+        questions:
+          type: array
+          maxItems: 20
+          items:
+            $ref: "#/components/schemas/AiQuizQuestion"
+        columns:
+          type: array
+          maxItems: 4
+          items:
+            type: string
+            maxLength: 500
+        rows:
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/AiComparisonRow"
+        gaps:
+          type: array
+          maxItems: 30
+          items:
+            $ref: "#/components/schemas/AiKnowledgeGap"
+    AiUsage:
+      type: object
+      additionalProperties: false
+      required: [model, inputCharacters, outputCharacters, estimatedTokens]
+      properties:
+        model:
+          type: string
+        inputCharacters:
+          type: number
+          multipleOf: 1
+          minimum: 0
+        outputCharacters:
+          type: number
+          multipleOf: 1
+          minimum: 0
+        estimatedTokens:
+          type: number
+          multipleOf: 1
+          minimum: 0
+    AiOperationResponse:
+      type: object
+      additionalProperties: false
+      required: [requestId, operation, result, usage]
+      properties:
+        requestId:
+          type: string
+        operation:
+          $ref: "#/components/schemas/AiOperation"
+        result:
+          $ref: "#/components/schemas/AiOperationResult"
+        usage:
+          $ref: "#/components/schemas/AiUsage"
+    ApiErrorResponse:
+      type: object
+      additionalProperties: false
+      required: [error, code, retryable]
+      properties:
+        error:
+          type: string
+        code:
+          type: string
+        retryable:
+          type: boolean
