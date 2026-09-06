@@ -1680,7 +1680,7 @@ function Home() {
           <p className="eyebrow" data-testid="text-eyebrow">
             Visual thinking, made spacious
           </p>
-          <h1 id="home-title" data-testid="text-product-title">Pathwise</h1>
+          <h1 id="home-title" data-testid="text-product-title">The Differential Diagnosis of Cytopathology</h1>
           <p className="hero-description" data-testid="text-home-description">
             Keep each question on its own sheet. Return to the idea you mean to
             work on, without the noise of everything else.
