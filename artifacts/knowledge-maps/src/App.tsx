@@ -1571,7 +1571,7 @@ function Home() {
             <span />
             <span />
           </span>
-          <span>The Differential Diagnosis in Cytopathology</span>
+          <span>Your Road to Success</span>
         </Link>
         <div className="header-home-actions">
           <span className="header-note">A quiet place for clear thinking</span>
