@@ -1571,7 +1571,7 @@ function Home() {
             <span />
             <span />
           </span>
-          <span>Knowledge Maps</span>
+          <span>The Differential Diagnosis in Cytopathology</span>
         </Link>
         <div className="header-home-actions">
           <span className="header-note">A quiet place for clear thinking</span>
@@ -1680,7 +1680,7 @@ function Home() {
           <p className="eyebrow" data-testid="text-eyebrow">
             Visual thinking, made spacious
           </p>
-          <h1 id="home-title" data-testid="text-product-title">The Differential Diagnosis of Cytopathology</h1>
+          <h1 id="home-title" data-testid="text-product-title">The differential diagnosis in cytopathology</h1>
           <p className="hero-description" data-testid="text-home-description">
             Keep each question on its own sheet. Return to the idea you mean to
             work on, without the noise of everything else.
@@ -2304,7 +2304,7 @@ function MapNotFound() {
         </p>
         <Link href="/" className="route-home-link" data-testid="link-map-not-found-home">
           <ArrowLeft size={15} strokeWidth={1.8} aria-hidden="true" />
-          <span>Back to Knowledge Maps</span>
+          <span>Back to The differential diagnosis in cytopathology</span>
         </Link>
       </div>
     </main>
@@ -6858,7 +6858,7 @@ function MapCompatibilityRoute() {
         <p>Return to the library to open a saved map or start a new one.</p>
         <Link href="/" className="route-home-link" data-testid="link-compatibility-home">
           <ArrowLeft size={15} strokeWidth={1.8} aria-hidden="true" />
-          <span>Back to Knowledge Maps</span>
+          <span>Back to The differential diagnosis in cytopathology</span>
         </Link>
       </div>
     </main>
