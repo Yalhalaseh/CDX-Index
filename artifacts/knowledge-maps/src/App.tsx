@@ -1680,7 +1680,7 @@ function Home() {
           <p className="eyebrow" data-testid="text-eyebrow">
             Visual thinking, made spacious
           </p>
-          <h1 id="home-title" data-testid="text-product-title">The differential diagnosis in cytopathology</h1>
+          <h1 id="home-title" data-testid="text-product-title">The Differential Diagnosis in Cytopathology</h1>
           <p className="hero-description" data-testid="text-home-description">
             Keep each question on its own sheet. Return to the idea you mean to
             work on, without the noise of everything else.
@@ -2304,7 +2304,7 @@ function MapNotFound() {
         </p>
         <Link href="/" className="route-home-link" data-testid="link-map-not-found-home">
           <ArrowLeft size={15} strokeWidth={1.8} aria-hidden="true" />
-          <span>Back to The differential diagnosis in cytopathology</span>
+          <span>Back to The Differential Diagnosis in Cytopathology</span>
         </Link>
       </div>
     </main>
@@ -6823,7 +6823,7 @@ function MapWorkspace() {
       <header className="workspace-header">
         <Link href="/" className="workspace-brand" data-testid="link-return-home">
           <ArrowLeft size={16} strokeWidth={1.8} aria-hidden="true" />
-          <span>Knowledge Maps</span>
+          <span>The Differential Diagnosis in Cytopathology</span>
         </Link>
         <div className="workspace-status" data-testid="text-map-status">
           <Circle size={7} fill="currentColor" strokeWidth={0} aria-hidden="true" />
@@ -6858,7 +6858,7 @@ function MapCompatibilityRoute() {
         <p>Return to the library to open a saved map or start a new one.</p>
         <Link href="/" className="route-home-link" data-testid="link-compatibility-home">
           <ArrowLeft size={15} strokeWidth={1.8} aria-hidden="true" />
-          <span>Back to The differential diagnosis in cytopathology</span>
+          <span>Back to The Differential Diagnosis in Cytopathology</span>
         </Link>
       </div>
     </main>
